@@ -15,9 +15,23 @@ namespace UTS
 
         protected void Setup()
         {
+            AddCom<InputManager>();
+
+
             CreateSchoolInfo();
             CreateMyClasses();
             LoadMyClasses();
+        }
+
+        private T AddCom<T>() where T : MonoBehaviour
+        {
+            var com = GetComponent<T>();
+            if (com == null)
+            {
+                com = gameObject.AddComponent<T>();
+            }
+
+            return com;
         }
 
         private void CreateSchoolInfo()
