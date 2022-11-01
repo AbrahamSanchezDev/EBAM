@@ -53,7 +53,7 @@ namespace UTS
             while (true)
             {
                 var curHour = CurHour();
-                var curMin = CurMin();
+                float curMin = CurMin();
 
                 var amPmHour = curHour;
                 var pm = false;
@@ -78,7 +78,8 @@ namespace UTS
 
                 //turn minutes to decimal
                 curMin /= 60;
-                var finalHour = curHour + curMin;
+                float finalHour = curHour + curMin;
+                Debug.Log(finalHour);
                 //Set the current hour to display it
                 _curHour.value = finalHour;
 
