@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UTS
 {
@@ -24,5 +25,13 @@ namespace UTS
         public GameObject HoursParent;
 
         public HourUiDisplay TheHourUiDisplay;
+
+        [Header("School Info")]
+        public Button TabButtons;
+
+        public ClassDataButton ClassButton;
+
+        public ScrollRect DisplayScrollView;
+
     }
 }

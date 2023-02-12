@@ -30,15 +30,17 @@ namespace UTS
             if (_daysTransform) return;
             _delay = new WaitForSeconds(1);
 
-            var topMenu = transform.GetChild(0);
-            _dayText = transform.Find("Day").GetComponentInChildren<TMP_Text>();
-            _onDisplayText = transform.Find("Display").GetComponentInChildren<TMP_Text>();
-            _curHour = transform.Find("CurrentHour").GetComponentInChildren<Slider>();
-            _nowText = transform.Find("Now").GetComponentInChildren<TMP_Text>();
+            var mainParent = transform.GetChild(0);
+           
+            _dayText = mainParent.Find("Day").GetComponentInChildren<TMP_Text>();
+            _onDisplayText = mainParent.Find("Display").GetComponentInChildren<TMP_Text>();
+            _curHour = mainParent.Find("CurrentHour").GetComponentInChildren<Slider>();
+            _nowText = mainParent.Find("Now").GetComponentInChildren<TMP_Text>();
 
 
-            var mainArea = transform.Find("MainDisplayArea");
+            var mainArea = mainParent.Find("MainDisplayArea");
 
+            var topMenu = mainParent.GetChild(0);
             _today = topMenu.transform.Find("Today").GetComponent<Button>();
             _week = topMenu.transform.Find("Week").GetComponent<Button>();
             _today.onClick.AddListener(ShowToday);
@@ -79,7 +81,7 @@ namespace UTS
                 //turn minutes to decimal
                 curMin /= 60;
                 float finalHour = curHour + curMin;
-                Debug.Log(finalHour);
+                //Debug.Log(finalHour);
                 //Set the current hour to display it
                 _curHour.value = finalHour;
 

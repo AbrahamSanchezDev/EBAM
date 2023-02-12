@@ -18,6 +18,7 @@ namespace UTS
 
         protected void Setup()
         {
+            if(_title)return;
             _title = transform.GetChild(0).GetComponent<TMP_Text>();
             _room = transform.GetChild(1).GetComponent<TMP_Text>();
             _teacher = transform.GetChild(2).GetComponent<TMP_Text>();
@@ -27,6 +28,8 @@ namespace UTS
 
         public void SetClassInfo(ClassInfo info)
         {
+            Setup();
+
             var schoolInfo = SchoolInfo.CurInfo;
 
             var roomInfo = schoolInfo.GetClassInfo(info.ClassId);

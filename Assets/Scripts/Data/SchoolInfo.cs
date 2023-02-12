@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -12,7 +11,25 @@ namespace UTS
         public List<string> Teachers = new List<string>();
         public List<RoomInfo> ClassRooms = new List<RoomInfo>();
 
-        public static SchoolInfo CurInfo;
+        private static SchoolInfo _curInfo;
+
+        public static SchoolInfo CurInfo
+        {
+            get
+            {
+                if (_curInfo != null)
+                {
+                    return _curInfo;
+                }
+
+                _curInfo = Load();
+                return _curInfo;
+            }
+            set
+            {
+                _curInfo = value;
+            }
+        }
 
 
         public ClassData GetClassInfo(int index)
@@ -33,6 +50,12 @@ namespace UTS
 
         public void CreateTemplateData()
         {
+            if (AlreadyExists())
+            {
+                Load();
+                return;
+            }
+
             AddClassInfo("");
             AddClassInfo("Ingles 1",160,160,254);
             AddClassInfo("Fundamentos de redes",255,185,237);
@@ -86,9 +109,15 @@ namespace UTS
 
         private static string FilePath()
         {
-            return Application.persistentDataPath + "/schoolInfo.json";
+            var rootPath = Application.persistentDataPath;
+            if (Directory.Exists(rootPath)) Directory.CreateDirectory(rootPath);
+            return rootPath + "/schoolInfo.json";
         }
 
+        private static bool AlreadyExists()
+        {
+            return File.Exists(FilePath());
+        }
         public static SchoolInfo Load()
         {
             var theText = File.ReadAllText(FilePath());
