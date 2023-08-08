@@ -102,11 +102,15 @@ namespace UTS
 
         public void Save()
         {
-            var theJsonText = JsonUtility.ToJson(this, true);
-            File.WriteAllText(FilePath(), theJsonText);
+            SaveLoadData<SchoolInfo>.Save(this, SaveFileName);
+            //var theJsonText = JsonUtility.ToJson(this, true);
+            //File.WriteAllText(FilePath(), theJsonText);
             //Debug.Log("Create School info");
+
+
         }
 
+        private static string SaveFileName = "schoolInfo";
         private static string FilePath()
         {
             var rootPath = Application.persistentDataPath;
@@ -116,16 +120,19 @@ namespace UTS
 
         private static bool AlreadyExists()
         {
-            return File.Exists(FilePath());
+            return SaveLoadData<SchoolInfo>.FileExistsOn(SaveFileName);
+            //return File.Exists(FilePath());
         }
         public static SchoolInfo Load()
         {
-            var theText = File.ReadAllText(FilePath());
+           
+            CurInfo =  SaveLoadData<SchoolInfo>.Load(SaveFileName);
+            return CurInfo;
 
-            var data = JsonUtility.FromJson<SchoolInfo>(theText);
-            CurInfo = data;
-
-            return data;
+            //var theText = File.ReadAllText(FilePath());
+            //var data = JsonUtility.FromJson<SchoolInfo>(theText);
+            //CurInfo = data;
+            //return data;
         }
     }
 }

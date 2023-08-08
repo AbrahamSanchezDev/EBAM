@@ -17,10 +17,14 @@ namespace UTS
         public List<ClassInfo> Day6;
         public List<ClassInfo> Day7;
 
+        //private static string SaveFileName = "MyClasses.json";
+        private static string SaveFileName = "MyClasses";
         public static bool AlreadyExists()
         {
-            return File.Exists(FilePath());
+            return SaveLoadData<ClassSchedule>.FileExistsOn(SaveFileName);
+            //return File.Exists(FilePath());
         }
+
 
         private static string FilePath()
         {
@@ -32,10 +36,17 @@ namespace UTS
 
         public ClassSchedule Load()
         {
-            var path = Application.persistentDataPath + "/MyClasses.json";
-            var theText = File.ReadAllText(path);
-            var theData = JsonUtility.FromJson<ClassSchedule>(theText);
-            return theData;
+            if (!AlreadyExists())
+            {
+                Save();
+                return this;
+            }
+            return SaveLoadData<ClassSchedule>.Load(SaveFileName);
+            //var path = Application.persistentDataPath + "/MyClasses.json";
+            //var theText = File.ReadAllText(path);
+            //var theData = JsonUtility.FromJson<ClassSchedule>(theText);
+            //return theData;
+
         }
 
         public void CreateTemplate()
@@ -92,10 +103,11 @@ namespace UTS
 
         public void Save()
         {
-            var theJsonText = JsonUtility.ToJson(this, true);
-            File.WriteAllText(FilePath(), theJsonText);
+            SaveLoadData<ClassSchedule>.Save(this, SaveFileName);
+            //var theJsonText = JsonUtility.ToJson(this, true);
+            //File.WriteAllText(FilePath(), theJsonText);
 
-            //Debug.Log("Created Classes");
+            Debug.Log("Created Classes");
         }
     }
 }
