@@ -16,8 +16,11 @@ namespace UTS
 
         public static UnityAction OnDelete, OnSave, OnCancel;
 
+        public static AddInfoUi Instance;
+
         protected void Awake()
         {
+            Instance = this;
             Setup();
         }
 
@@ -70,6 +73,11 @@ namespace UTS
             _buttonsGo.SetActive(!show);
         }
 
+        public Color GetColor()
+        {
+            return _colorPicker.color;
+        }
+
         #region Buttons
         private void DoCancel()
         {
@@ -113,7 +121,7 @@ namespace UTS
         }
 
         #endregion
-        private void Clear()
+        public void Clear()
         {
             Show(false);
             ShowNumbers(false);
