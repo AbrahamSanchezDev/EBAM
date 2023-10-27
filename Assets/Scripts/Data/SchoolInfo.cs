@@ -34,6 +34,10 @@ namespace UTS
 
         public ClassData GetClassInfo(int index)
         {
+            if(index >= ClassInfo.Count)
+            {
+                return new ClassData() { TheName = "NO CLASS DATA", r = 1, g = 1, b = 1 };
+            }
             return ClassInfo[index];
         }
 
@@ -57,15 +61,15 @@ namespace UTS
             }
 
             AddClassInfo("");
-            AddClassInfo("Ingles 1",160,160,254);
-            AddClassInfo("Fundamentos de redes",255,185,237);
-            AddClassInfo("Fundamentos de TI",195,218,236);
-            AddClassInfo("Expresión oral y escrita 1",110,255,216);
-            AddClassInfo("Álgebra lineal",255,192,87);
-            AddClassInfo("Metadología de la programación",0);
-            AddClassInfo("Tutoría", 195, 218, 236);
-            AddClassInfo("Desarrollo de habilidades del pensamiento lógico",128,255,0);
-            AddClassInfo("Formación sociocultural 1", 110, 255, 216);
+            AddClassInfo("Ingles 1",160f/255f,160f / 255f, 254f / 255f);
+            AddClassInfo("Fundamentos de redes",255f / 255f, 185f / 255f, 237f / 255f);
+            AddClassInfo("Fundamentos de TI",(195f / 255f), 218f / 255f, 236f / 255f);
+            AddClassInfo("Expresión oral y escrita 1",110f / 255f, 255f / 255f, 216f / 255f);
+            AddClassInfo("Álgebra lineal",255f / 255f, 192f / 255f, 87f / 255f);
+            AddClassInfo("Metadología de la programación",1f,1f,1f);
+            AddClassInfo("Tutoría", 195f / 255f, 218f / 255f, 236f / 255f);
+            AddClassInfo("Desarrollo de habilidades del pensamiento lógico",128f / 255f, 255f / 255f, 0);
+            AddClassInfo("Formación sociocultural 1", 110f / 255f, 255f / 255f, 216f / 255f);
 
             Teachers.Add(" ");
             Teachers.Add("Karla Paola Capetillo Camacho");
@@ -88,7 +92,7 @@ namespace UTS
             Save();
         }
 
-        public void AddClassInfo(string theName, byte r = 255, byte g = 255, byte b = 255)
+        public void AddClassInfo(string theName, float r = 1, float g = 1, float b = 1)
         {
             var data = new ClassData()
             {
@@ -97,6 +101,10 @@ namespace UTS
                 g = g,
                 b = b
             };
+            ClassInfo.Add(data);
+        }
+        public void AddClassInfo(ClassData data)
+        {
             ClassInfo.Add(data);
         }
 

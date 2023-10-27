@@ -15,10 +15,10 @@ namespace UTS
             var but = GetComponent<Button>();
             but.onClick.AddListener(() =>
             {
-
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.ExitPlaymode();
+#endif
                 Application.Quit();
-
-
             });
         }
     }

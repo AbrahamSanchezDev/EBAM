@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 namespace UTS
 {
-    public class AddInfoUi : MonoBehaviour
+    public class AddInfoUi : ScreenController
     {
-        private GameObject _parentGo,_inputsGo,_numbersGo,_colorGo,_contentGo,_buttonsGo;
+        private GameObject _parentGo, _inputsGo, _numbersGo, _colorGo, _contentGo, _buttonsGo;
+
+        public InputUiObj _inputUi, _numbersUi, _colorsUi;
+
 
         private GameObject _cancelGo, _saveGo, _deleteGo;
 
@@ -51,12 +54,22 @@ namespace UTS
             _numbersGo = content.Find("Numeros").gameObject;
             _colorGo = content.Find("Color").gameObject;
 
+
+            _inputUi = _inputsGo.GetComponent<InputUiObj>();
+            _numbersUi = _numbersGo.GetComponent<InputUiObj>();
+            _colorsUi = _colorGo.GetComponent<InputUiObj>();
+
             _colorPicker = _parentGo.transform.Find("ColorPicker").GetComponent<FlexibleColorPicker>();
             _okColorGo = _parentGo.transform.Find("OkColor").gameObject;
             var okBut = _okColorGo.GetComponent<Button>();
-            okBut.onClick.AddListener(HideColorPicker);
+            okBut.onClick.AddListener(ConfirmColorPick);
+
+            _colorsUi.Setup();
+            _colorsUi.TheButton.onClick.AddListener(() => { ShowColorPicker(true); });
 
             ShowColorPicker(false);
+
+            Show(false);
         }
 
         public void Show(bool show)
@@ -78,7 +91,27 @@ namespace UTS
             return _colorPicker.color;
         }
 
+        public void SetTheColor(Color theColor)
+        {
+            ShowColors(true);
+            _colorPicker.color = theColor;
+            _colorsUi.SetColorPickerColor(_colorPicker.color);
+
+            _colorsUi.SetDisplayText("El color");
+        }
+
         #region Buttons
+
+        public void SetEvents(UnityAction onCancel, UnityAction onSave = null,UnityAction onDelete = null)
+        {
+            HideAllButtons();
+            OnCancel = onCancel;
+            OnSave = onSave;
+            OnDelete = onDelete;
+            ShowCancel(OnDelete != null);
+            ShowSave(OnSave != null);
+            ShowDelete(OnDelete != null);
+        }
         private void DoCancel()
         {
             OnCancel?.Invoke();
@@ -109,6 +142,18 @@ namespace UTS
         }
         #endregion
 
+        public void HideAllButtons()
+        {
+            ShowCancel(false);
+            ShowSave(false);
+            ShowDelete(false);
+        }
+        public void HideAllInputs()
+        {
+            ShowColors(false);
+            ShowNumbers(false);
+            ShowColorPicker(false);
+        }
         #region
 
         public void ShowNumbers(bool show)
@@ -130,9 +175,32 @@ namespace UTS
             OnDelete = null;
             OnCancel = null;
         }
+        private void ConfirmColorPick()
+        {
+            SetTheColor(GetColor());
+            HideColorPicker();
+        }
         private void HideColorPicker()
         {
             ShowColorPicker(false);           
         }
+
+        #region GetInfo
+
+        public string GetInputText()
+        {
+            return _inputUi.GetText();
+        }
+
+        protected override void OnShowScreen(ScreenName theScreen)
+        {
+            Show(false);
+        }
+
+        protected override void OnDisplayAction(DisplayWindowAction theAction)
+        {
+            
+        }
+        #endregion
     }
 }

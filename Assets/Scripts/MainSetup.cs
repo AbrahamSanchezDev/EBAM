@@ -1,11 +1,28 @@
 ﻿using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace UTS
 {
+    public enum ScreenName
+    {
+        None,
+        Horarios,
+        EditarHorarios
+    }
+    public enum DisplayWindowAction
+    {
+        None,
+        UpdateData
+    }
+    public class ChangeToScreenEvent : UnityEvent<ScreenName> { }
+    public class DisplayWindowActionEvent : UnityEvent<DisplayWindowAction> { }
     public class MainSetup : MonoBehaviour
     {
         public HoursUi HoursUi;
+
+        public static ChangeToScreenEvent ChangeToScreen = new ChangeToScreenEvent();
+        public static DisplayWindowActionEvent DisplayWindowAction = new DisplayWindowActionEvent();
 
 
         protected void Awake()
@@ -41,7 +58,11 @@ namespace UTS
         {
             var classes = new ClassSchedule();
 
-            if (!ClassSchedule.AlreadyExists()) classes.CreateTemplate();
+            if (!ClassSchedule.AlreadyExists())
+            {
+                classes.CreateTemplate();
+                //Debug.Log("Created Template data");
+            }
         }
 
         private void LoadMyClasses()

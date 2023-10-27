@@ -31,13 +31,15 @@ namespace UTS
             var rootPath = Application.persistentDataPath;
             if (Directory.Exists(rootPath)) Directory.CreateDirectory(rootPath);
 
-            return rootPath + "/MyClasses.json";
+            return rootPath + "SaveData/MyClasses.data";
         }
 
         public ClassSchedule Load()
         {
             if (!AlreadyExists())
             {
+                Debug.Log("DIDNT EXISTS");
+                CreateTemplate();
                 Save();
                 return this;
             }
@@ -53,6 +55,7 @@ namespace UTS
         {
             if (File.Exists(FilePath()))
             {
+                Debug.Log("FILE ALREADY EXISTS");
                 return;
             }
             //Lunes
@@ -107,7 +110,7 @@ namespace UTS
             //var theJsonText = JsonUtility.ToJson(this, true);
             //File.WriteAllText(FilePath(), theJsonText);
 
-            Debug.Log("Created Classes");
+            //Debug.Log("Created Classes");
         }
     }
 }

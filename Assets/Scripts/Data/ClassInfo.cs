@@ -7,6 +7,8 @@
         public int TeacherId;
         public int ClassRoomId;
         public int Duration;
+        //public byte StartHour;
+        //public byte EndHour;
         public string Description;
 
         public ClassInfo(int classId, int teacherId, int classRoomId,byte duration,string description="")

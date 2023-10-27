@@ -7,10 +7,13 @@ using UnityEngine.UI;
 
 namespace UTS
 {
-    public class HoursUi : MonoBehaviour
+    public class HoursUi : ScreenController
     {
+        private GameObject _parentGo;
+
         private Button _today;
         private Button _week;
+        private Button _settings;
 
         private Transform _daysTransform;
 
@@ -31,7 +34,9 @@ namespace UTS
             _delay = new WaitForSeconds(1);
 
             var mainParent = transform.GetChild(0);
-           
+            _parentGo = mainParent.gameObject;
+            Show();
+
             _dayText = mainParent.Find("Day").GetComponentInChildren<TMP_Text>();
             _onDisplayText = mainParent.Find("Display").GetComponentInChildren<TMP_Text>();
             _curHour = mainParent.Find("CurrentHour").GetComponentInChildren<Slider>();
@@ -43,11 +48,22 @@ namespace UTS
             var topMenu = mainParent.GetChild(0);
             _today = topMenu.transform.Find("Today").GetComponent<Button>();
             _week = topMenu.transform.Find("Week").GetComponent<Button>();
+
+            _settings = topMenu.transform.Find("Edit").GetComponent<Button>();
+
             _today.onClick.AddListener(ShowToday);
             _week.onClick.AddListener(ShowWeek);
+            _settings.onClick.AddListener(ShowSettings);
 
 
             _daysTransform = mainArea;
+
+            //Show(false);
+        }
+
+        private void Show(bool show = true)
+        {
+            _parentGo.SetActive(show);
         }
 
         private IEnumerator Start()
@@ -65,8 +81,13 @@ namespace UTS
                     pm = true;
                 }
 
+                string minsText = curMin.ToString();
 
-                _nowText.text = amPmHour + ":" + curMin + (pm? " PM": " AM");
+                if (curMin < 10)
+                {
+                    minsText = "0" + curMin;
+                }
+                _nowText.text = amPmHour + ":" + minsText + (pm ? " PM" : " AM");
                 //Clamp to the lowest hour
                 if (curHour < 7)
                 {
@@ -103,13 +124,15 @@ namespace UTS
             return today.Minute;
         }
 
-        protected void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             InputManager.OnSwipe.AddListener(OnSwipe);
         }
 
-        protected void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             InputManager.OnSwipe.RemoveListener(OnSwipe);
         }
 
@@ -155,9 +178,9 @@ namespace UTS
         {
             var today = DateTime.Today.DayOfWeek;
 
-            IndexToShow = (int) today;
+            IndexToShow = (int)today;
 
-            SetDayText(TodayName((int) today));
+            SetDayText(TodayName((int)today));
         }
 
         private string TodayName(int index)
@@ -225,12 +248,49 @@ namespace UTS
         private Dictionary<int, GameObject> DaysCalendars = new Dictionary<int, GameObject>();
         private List<HourUiDisplay> allUi = new List<HourUiDisplay>();
 
+        public void UpdateData()
+        {
+            Setup();
+
+            allUi.Clear();
+
+            var CurSchedule = ClassesInfo.CurSchedule;
+
+            AddDay(1, CurSchedule.Day1);
+            AddDay(2, CurSchedule.Day2);
+            AddDay(3, CurSchedule.Day3);
+            AddDay(4, CurSchedule.Day4);
+            AddDay(5, CurSchedule.Day5);
+
+            Initday();
+        }
+
+        private Transform _hoursParent;
+
+
         public void AddDay(int dayIndex, List<ClassInfo> info)
         {
             var prefabs = PrefabRefs.Instance;
 
-            var theParent = Instantiate(prefabs.HoursParent, _daysTransform);
+            GameObject theParent = null;
+            bool hadObj = false;
 
+            if (DaysCalendars.ContainsKey(dayIndex))
+            {
+                theParent = DaysCalendars[dayIndex];
+                hadObj = true;
+            }
+
+            if (theParent == null)
+            {
+                theParent = Instantiate(prefabs.HoursParent, _daysTransform); 
+            }
+         
+
+            while(theParent.transform.childCount > 0)
+            {
+                DestroyImmediate(theParent.transform.GetChild(0).gameObject);
+            }
 
             for (var i = 0; i < info.Count; i++)
             {
@@ -239,8 +299,8 @@ namespace UTS
                 allUi.Add(theClassInfo);
             }
 
-
-            DaysCalendars.Add(dayIndex, theParent.gameObject);
+            if (!hadObj)
+                DaysCalendars.Add(dayIndex, theParent.gameObject);
         }
 
         public void Initday()
@@ -253,6 +313,30 @@ namespace UTS
             yield return null;
             for (var i = 0; i < allUi.Count; i++) allUi[i].UpdateSize();
             ShowToday();
+        }
+
+        private void ShowSettings()
+        {
+            BackToPreviewsControl.ShowGoBack(BackToHours);
+            MainSetup.ChangeToScreen.Invoke(ScreenName.EditarHorarios);
+        }
+
+        private void BackToHours()
+        {
+            MainSetup.ChangeToScreen.Invoke(ScreenName.Horarios);
+        }
+
+        protected override void OnShowScreen(ScreenName theScreen)
+        {
+            Show(theScreen == ScreenName.Horarios);
+        }
+
+        protected override void OnDisplayAction(DisplayWindowAction theAction)
+        {
+            if(theAction == DisplayWindowAction.UpdateData)
+            {
+                UpdateData();
+            }
         }
     }
 }

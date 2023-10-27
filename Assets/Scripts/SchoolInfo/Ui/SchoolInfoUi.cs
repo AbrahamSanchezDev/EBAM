@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace UTS
 {
-    public class SchoolInfoUi : MonoBehaviour
+    public class SchoolInfoUi : ScreenController
     {
-        protected void Awake()
+        private int _curIndex;
+
+        protected void Start()
         {
             Setup();
         }
@@ -17,20 +19,35 @@ namespace UTS
 
         private ClassDataControlUi _classDataControl;
 
+        private GameObject _parentGo;
+
         protected void Setup()
         {
-            var prefabs = PrefabRefs.Instance;
-
             var parentGo = transform.GetChild(0);
+
+            _parentGo = parentGo.gameObject;
+            Show();
+
             _tabs = parentGo.Find("Tabs");
 
-            AddTab("Classes",0);
+            AddTab("Classes", 0);
             AddTab("Maestros", 1);
             AddTab("Rooms", 2);
 
             _classDataControl = gameObject.AddComponent<ClassDataControlUi>();
 
             _classDataControl.Setup(parentGo);
+
+
+            var adds = parentGo.Find("Adds");
+            var add = adds.Find("Add").GetComponent<Button>();
+            add.onClick.AddListener(OnAdd);
+            Show(false);
+        }
+
+        public void Show(bool show = true)
+        {
+            _parentGo.SetActive(show);
         }
 
         private void AddTab(string displayText,int index)
@@ -45,11 +62,39 @@ namespace UTS
 
         private void OnPressTab(int index)
         {
-
-            _classDataControl.Show(index == 0);
+            _curIndex = index;
+            _classDataControl.ShowMainUi(index == 0);
 
         }
 
+        private void OnAdd()
+        {
+            switch (_curIndex)
+            {
+                case 0:
+                    _classDataControl.AddData();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+        }
 
+        protected override void OnShowScreen(ScreenName theScreen)
+        {
+            Show(theScreen == ScreenName.EditarHorarios);
+        }
+
+        protected override void OnDisplayAction(DisplayWindowAction theAction)
+        {
+
+            switch (theAction)
+            {
+                case DisplayWindowAction.UpdateData:
+                    _classDataControl.UpdateData();
+                    break;
+            }
+        }
     }
 }

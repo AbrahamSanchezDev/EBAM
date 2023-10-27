@@ -40,7 +40,7 @@ namespace UTS
             _teacher.text = schoolInfo.GetTeacher(info.TeacherId);
 
             var image = GetComponent<Image>();
-            image.color = new Color32(roomInfo.r, roomInfo.g, roomInfo.b, 255);
+            image.color = new Color(roomInfo.r, roomInfo.g, roomInfo.b, 1);
 
             _info = info;
             _description.text = info.Description;
