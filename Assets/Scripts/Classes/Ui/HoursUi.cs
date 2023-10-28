@@ -58,7 +58,7 @@ namespace UTS
 
             _daysTransform = mainArea;
 
-            //Show(false);
+            Show(false);
         }
 
         private void Show(bool show = true)

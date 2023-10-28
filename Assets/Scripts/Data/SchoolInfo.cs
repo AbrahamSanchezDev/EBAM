@@ -108,6 +108,11 @@ namespace UTS
             ClassInfo.Add(data);
         }
 
+        public void AddTeacher(string theName)
+        {
+            Teachers.Add(theName);
+        }
+
         public void Save()
         {
             SaveLoadData<SchoolInfo>.Save(this, SaveFileName);

@@ -18,7 +18,7 @@ namespace UTS
 
 
         private ClassDataControlUi _classDataControl;
-
+        private TeachersDataControlUi _teachersDataControl;
         private GameObject _parentGo;
 
         protected void Setup()
@@ -35,14 +35,18 @@ namespace UTS
             AddTab("Rooms", 2);
 
             _classDataControl = gameObject.AddComponent<ClassDataControlUi>();
+            _teachersDataControl = gameObject.AddComponent<TeachersDataControlUi>();
 
             _classDataControl.Setup(parentGo);
+            _teachersDataControl.Setup(parentGo);
 
 
             var adds = parentGo.Find("Adds");
             var add = adds.Find("Add").GetComponent<Button>();
             add.onClick.AddListener(OnAdd);
-            Show(false);
+
+            OnPressTab(0);
+            //Show(false);
         }
 
         public void Show(bool show = true)
@@ -64,6 +68,7 @@ namespace UTS
         {
             _curIndex = index;
             _classDataControl.ShowMainUi(index == 0);
+            _teachersDataControl.ShowMainUi(index == 1);
 
         }
 
@@ -75,6 +80,7 @@ namespace UTS
                     _classDataControl.AddData();
                     break;
                 case 1:
+                    _teachersDataControl.AddData();
                     break;
                 case 2:
                     break;
@@ -93,6 +99,7 @@ namespace UTS
             {
                 case DisplayWindowAction.UpdateData:
                     _classDataControl.UpdateData();
+                    _teachersDataControl.UpdateData();
                     break;
             }
         }

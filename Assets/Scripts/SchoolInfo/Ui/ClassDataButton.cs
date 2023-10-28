@@ -39,10 +39,20 @@ namespace UTS
                 _theText.text = theText;
             else
                 Debug.Log("No Text in " + gameObject.name);
-            if(_image)
+            if (_image)
             _image.color = theColor;
         }
 
-        
+        public void SetData(string theText)
+        {
+            Setup();
+            if (_theText)
+                _theText.text = theText;
+            else
+                Debug.Log("No Text in " + gameObject.name);
+            if (_image)
+                _image.gameObject.SetActive(false);
+        }
+
     }
 }
