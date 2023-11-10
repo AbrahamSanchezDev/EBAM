@@ -58,7 +58,7 @@ namespace UTS
 
             _daysTransform = mainArea;
 
-            Show(false);
+            //Show(false);
         }
 
         private void Show(bool show = true)
@@ -291,7 +291,8 @@ namespace UTS
             {
                 DestroyImmediate(theParent.transform.GetChild(0).gameObject);
             }
-
+            //TODO ordenar la info por inicio de clase y rellenar las horas faltantes
+            //TODO calcular duracion de la clase basado en inicio y terminacion de clase
             for (var i = 0; i < info.Count; i++)
             {
                 var theClassInfo = Instantiate(prefabs.TheHourUiDisplay, theParent.transform);

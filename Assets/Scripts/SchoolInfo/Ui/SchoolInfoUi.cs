@@ -30,9 +30,10 @@ namespace UTS
 
             _tabs = parentGo.Find("Tabs");
 
-            AddTab("Classes", 0);
+            AddTab("Materias", 0);
             AddTab("Maestros", 1);
-            AddTab("Rooms", 2);
+            AddTab("Salones", 2);
+            //AddTab("Horarios", 3);
 
             _classDataControl = gameObject.AddComponent<ClassDataControlUi>();
             _teachersDataControl = gameObject.AddComponent<TeachersDataControlUi>();
@@ -46,7 +47,7 @@ namespace UTS
             add.onClick.AddListener(OnAdd);
 
             OnPressTab(0);
-            //Show(false);
+            Show(false);
         }
 
         public void Show(bool show = true)
