@@ -5,6 +5,35 @@ using UnityEngine;
 namespace UTS
 {
     [System.Serializable]
+    public class ClassHours
+    {
+        public string Hora;
+    }
+    public enum HourByName
+    {
+        at700am = 0,
+        at800am = 1,
+        at850am = 2,
+        at940am = 3,
+        at1030am = 4,
+        at1120am = 5,
+        at1210pm = 6,
+        at100pm = 7,
+        at150pm = 8,
+        at240pm = 9,
+        at330pm = 10
+    }
+    public enum DaysByNam
+    {
+        Domingo,
+        Lunes,
+        Martes,
+        Miercoles,
+        Jueves,
+        Viernes,
+        Sabado
+    }
+    [System.Serializable]
     public class ClassSchedule
     {
         public List<ClassInfo> Day1 = new List<ClassInfo>();
@@ -12,6 +41,108 @@ namespace UTS
         public List<ClassInfo> Day3 = new List<ClassInfo>();
         public List<ClassInfo> Day4 = new List<ClassInfo>();
         public List<ClassInfo> Day5 = new List<ClassInfo>();
+
+        public List<ClassInfo> AllDays = new List<ClassInfo>();
+
+
+        public void FillDays()
+        {
+            if (AllDays.Count == 0) {
+                Debug.Log("NO DATA ON ALL DAYS");
+                return;
+                    };
+
+            //Remove empty slots
+            for (int i = 0; i < AllDays.Count; i++)
+            {
+                if (AllDays[i].ClassId ==  0 && AllDays[i].ClassRoomId == 0 && AllDays[i].TeacherId == 0)
+                {
+                    AllDays.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            AllDays.Sort((p1, p2) => p1.Day.CompareTo(p2.Day));
+
+            Day1 = FillList(1);
+            Day2 = FillList(2);
+            Day3 = FillList(3);
+            Day4 = FillList(4);
+            Day5 = FillList(5);
+
+            //Index them all
+            for (int i = 0; i < AllDays.Count; i++)
+            {
+                AllDays[i].Index = i;
+            }
+            Debug.Log("SORTING!");
+        }
+
+        private List<ClassInfo> FillList(int day)
+        {
+            var theDayData = new List<ClassInfo>();
+            //AddExisting
+            for (int i = 0; i < AllDays.Count; i++)
+            {
+                if(AllDays[i].Day == day)
+                {
+                    theDayData.Add(AllDays[i]);
+                }
+            }
+            int maxHours = 10;
+            // Fill empty slots
+            for (int i = 0; i < maxHours; i++)
+            {
+                if (!HasTimeInList(theDayData, i))
+                {
+                    theDayData.Add(new ClassInfo(0, 0, 0, (HourByName)i, (HourByName)i + 1, (DaysByNam)day));
+                    //Debug.Log("Adding hour " + i + " to day: " + day);
+                }
+            }
+            // Order them by the hour
+            theDayData.Sort((p1, p2) => p1.StartHour.CompareTo(p2.EndHour));
+
+            return theDayData;
+
+        }
+        private bool HasTimeInList(List<ClassInfo> data,int time)
+        {
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i].HasTimeOnIt(time))
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+        public List<string> GetHoursText()
+        {
+            var list = new List<string>();
+      
+            for (int i = 0; i < Hours.Length; i++)
+            {
+                list.Add(Hours[i].Hora);
+            }
+            return list;
+        }
+        public static ClassHours[] Hours =
+            Hours = new ClassHours[]
+            {
+                new ClassHours{Hora = "7:00 am"},
+                new ClassHours{Hora = "8:00 am"},
+                new ClassHours{Hora = "8:50 am"},
+                new ClassHours{Hora = "9:40 am"},
+                new ClassHours{Hora = "10:30 am"},
+                new ClassHours{Hora = "11:20 am"},
+                new ClassHours{Hora = "12:10 pm"},
+                new ClassHours{Hora = "1:00 pm"},
+                new ClassHours{Hora = "1:50 pm"},
+                new ClassHours{Hora = "2:40 pm"},
+                new ClassHours{Hora = "3:30 pm"}
+            };
 
         //Weekend
         public List<ClassInfo> Day6;
@@ -58,49 +189,51 @@ namespace UTS
                 Debug.Log("FILE ALREADY EXISTS");
                 return;
             }
+
+            AllDays.Clear();
             //Lunes
-            Day1.Add(new ClassInfo(1, 1, 0, 1));
-            Day1.Add(new ClassInfo(2, 0, 5, 3, "8:00am - 10:30am"));
-            Day1.Add(new ClassInfo(0, 0, 0, 1));
+            AllDays.Add(new ClassInfo(1, 1, 0, HourByName.at700am, HourByName.at800am, DaysByNam.Lunes));
+            AllDays.Add(new ClassInfo(2, 1, 5, HourByName.at800am, HourByName.at1030am, DaysByNam.Lunes));
             //Cual es el salon de FTIS el lunes?
-            Day1.Add(new ClassInfo(3, 2, 0, 2, "11:20am - 1:00pm"));
-            Day1.Add(new ClassInfo(0, 0, 0, 1));
-            Day1.Add(new ClassInfo(4, 3, 0, 2, "1:50pm - 3:30pm"));
+            AllDays.Add(new ClassInfo(3, 2, 0, HourByName.at1120am, HourByName.at100pm, DaysByNam.Lunes));
+            AllDays.Add(new ClassInfo(4, 3, 0, HourByName.at150pm, HourByName.at330pm, DaysByNam.Lunes));
 
             //Martes
             //Cual es el numero de laboratoro de ingles?
-            Day2.Add(new ClassInfo(1, 1, 0, 1));
-            Day2.Add(new ClassInfo(2, 2, 5, 2, "8:00am - 9:40am"));
-            Day2.Add(new ClassInfo(5, 4, 0, 2, "9:40am - 11:20am"));
-            Day2.Add(new ClassInfo(0, 0, 0, 1));
-            Day2.Add(new ClassInfo(6, 5, 5, 2, "12:10pm - 1:50pm"));
+            AllDays.Add(new ClassInfo(1, 1, 0, HourByName.at700am, HourByName.at800am, DaysByNam.Martes));
+            AllDays.Add(new ClassInfo(2, 2, 5, HourByName.at800am, HourByName.at940am, DaysByNam.Martes));
+            AllDays.Add(new ClassInfo(5, 4, 0, HourByName.at940am, HourByName.at1120am, DaysByNam.Martes));
+            AllDays.Add(new ClassInfo(6, 5, 5, HourByName.at1210pm, HourByName.at150pm, DaysByNam.Martes));
             //Cual es el numero de laboratoro de FTIS?
-            Day2.Add(new ClassInfo(3, 2, 0, 1, "1:50pm - 2:40pm"));
+            AllDays.Add(new ClassInfo(3, 2, 0, HourByName.at150pm, HourByName.at240pm, DaysByNam.Martes));
 
             //Miercoles
-            Day3.Add(new ClassInfo(1, 1, 0, 1));
-            Day3.Add(new ClassInfo(6, 5, 5, 3, "8:00am - 10:30am"));
-            Day3.Add(new ClassInfo(0, 0, 0, 1));
-            Day3.Add(new ClassInfo(5, 4, 0, 2, "11:20am - 1:00pm"));
-            Day3.Add(new ClassInfo(7, 2, 0, 1, "1:00pm - 1:50pm"));
-            Day3.Add(new ClassInfo(4, 3, 0, 2, "1:50pm - 3:30pm"));
+            AllDays.Add(new ClassInfo(1, 1, 0, HourByName.at700am, HourByName.at800am, DaysByNam.Miercoles));
+            AllDays.Add(new ClassInfo(6, 5, 5, HourByName.at800am, HourByName.at1030am, DaysByNam.Miercoles));
+
+            AllDays.Add(new ClassInfo(5, 4, 0, HourByName.at1120am, HourByName.at100pm, DaysByNam.Miercoles));
+            AllDays.Add(new ClassInfo(7, 2, 0, HourByName.at100pm, HourByName.at150pm, DaysByNam.Miercoles));
+            AllDays.Add(new ClassInfo(4, 3, 0, HourByName.at150pm, HourByName.at330pm, DaysByNam.Miercoles));
 
             //Jueves
-            Day4.Add(new ClassInfo(1, 1, 0, 1));
-            Day4.Add(new ClassInfo(8, 6, 0, 1, "8:00am - 8:50am"));
-            Day4.Add(new ClassInfo(0, 0, 0, 1));
-            Day4.Add(new ClassInfo(5, 4, 0, 2, "9:40am - 11:20am"));
-            Day4.Add(new ClassInfo(0, 0, 0, 1));
-            Day4.Add(new ClassInfo(7, 2, 0, 1, "12:10pm - 1:00pm"));
-            Day4.Add(new ClassInfo(4, 3, 0, 2));
-            Day4.Add(new ClassInfo(0, 0, 0, 1));
+            AllDays.Add(new ClassInfo(1, 1, 0, HourByName.at700am, HourByName.at800am, DaysByNam.Jueves));
+
+            AllDays.Add(new ClassInfo(8, 6, 0, HourByName.at800am, HourByName.at850am, DaysByNam.Jueves));
+
+            AllDays.Add(new ClassInfo(5, 4, 0, HourByName.at940am, HourByName.at1120am, DaysByNam.Jueves));
+
+            AllDays.Add(new ClassInfo(7, 2, 0, HourByName.at1210pm, HourByName.at100pm, DaysByNam.Jueves));
+            AllDays.Add(new ClassInfo(4, 3, 0, HourByName.at100pm, HourByName.at240pm, DaysByNam.Jueves));
 
             //Viernes
-            Day5.Add(new ClassInfo(0, 0, 0, 3));
-            Day5.Add(new ClassInfo(8, 6, 0, 2, "9:40am - 11:20am"));
-            Day5.Add(new ClassInfo(3, 2, 5, 2, "11:20am - 1:00pm"));
-            Day5.Add(new ClassInfo(0, 0, 0, 1));
-            Day5.Add(new ClassInfo(9, 3, 0, 2, "1:50pm - 3:30pm"));
+
+            AllDays.Add(new ClassInfo(8, 6, 0, HourByName.at940am, HourByName.at1120am, DaysByNam.Viernes));
+            AllDays.Add(new ClassInfo(3, 2, 5, HourByName.at1120am, HourByName.at100pm, DaysByNam.Viernes));
+            AllDays.Add(new ClassInfo(9, 3, 0, HourByName.at150pm, HourByName.at330pm, DaysByNam.Viernes));
+
+
+            FillDays();
+            Debug.LogWarning("Update the class info");
             Save();
         }
 

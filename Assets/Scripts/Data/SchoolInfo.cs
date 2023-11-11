@@ -31,6 +31,24 @@ namespace UTS
             }
         }
 
+        public List<string> ClassInfoNames()
+        {
+            var list = new List<string>();
+            for (int i = 0; i < ClassInfo.Count; i++)
+            {
+                list.Add(ClassInfo[i].TheName);
+            }
+            return list;
+        }
+        public List<string> ClassRoomsNames()
+        {
+            var list = new List<string>();
+            for (int i = 0; i < ClassRooms.Count; i++)
+            {
+                list.Add(ClassRooms[i].Name);
+            }
+            return list;
+        }
 
         public ClassData GetClassInfo(int index)
         {
@@ -75,7 +93,7 @@ namespace UTS
             Teachers.Add("Karla Paola Capetillo Camacho");
             Teachers.Add("David Rodríguez V.");
             Teachers.Add("Gustavo Cruz B.");
-            Teachers.Add("Edgar Geovanni Barrera C.");
+            Teachers.Add("Basilio Angeles Kevin Axl");
             Teachers.Add("Marco Aurelio Ramírez S.");
             Teachers.Add("Jesús Eduardo Gasca B.");
 

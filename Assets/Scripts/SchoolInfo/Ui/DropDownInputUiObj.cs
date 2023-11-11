@@ -1,18 +1,16 @@
 ﻿using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 namespace UTS
 {
-    public class InputUiObj : MonoBehaviour
+    public class DropDownInputUiObj : MonoBehaviour
     {
 
-        private TMP_InputField _input;
+        private TMP_Dropdown _options;
         private TextMeshProUGUI _theText;
-
-        public Button TheButton;
-
 
         public Image _theImage;
 
@@ -21,44 +19,41 @@ namespace UTS
             Setup();
         }
         public void Setup() {
-            if (_input) return;
-            _input = GetComponentInChildren<TMP_InputField>();
-            _theText = transform.Find("Title").GetComponentInChildren<TextMeshProUGUI>();
-            TheButton = GetComponentInChildren<Button>();
-
-            if (TheButton)
-            {
-                _theImage = TheButton.gameObject.GetComponent<Image>();
-            }
+            if (_options) return;
+            _options = GetComponentInChildren<TMP_Dropdown>();
+            _theText = transform.Find("Title").GetComponentInChildren<TextMeshProUGUI>();            
         }
 
         public string GetText()
         {
-            return _input.text;
+            return _options.options[_options.value].text;
+        }
+        public int GetPosition()
+        {
+            return _options.value;
         }
 
-
-        public void SetDisplayText(string theTitle,string theContent)
+        public void SetDisplayText(string theTitle, List<string> theContent)
         {
             SetDisplayText(theTitle);
-            SetText( theContent);
+            SetOptions( theContent);
         }
-        public void SetText(string theText)
+        public void SetOptions(List<string> theText)
         {
-            Setup();
-            _input.text = theText;
+            _options.options.Clear();
+            _options.AddOptions(theText);
+        }
+
+        public void SetCurrentOption(int index)
+        {
+            _options.value = index;
         }
         public void SetDisplayText(string theText)
         {
             Setup();
             _theText.text = theText + ": ";
         }
-
-        public void ClearText()
-        {
-            _input.text = "";
-        }
-
+        
         public void SetColorPickerColor(Color theColor)
         {
             Setup();

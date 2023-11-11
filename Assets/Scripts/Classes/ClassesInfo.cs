@@ -17,6 +17,7 @@ namespace UTS
             SchoolInfo.Load();
             CurSchedule = new ClassSchedule().Load();
             Schedule = CurSchedule;
+            
             ui.UpdateData();
         }
     }

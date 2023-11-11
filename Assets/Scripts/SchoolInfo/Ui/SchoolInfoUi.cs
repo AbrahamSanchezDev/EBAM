@@ -19,6 +19,7 @@ namespace UTS
 
         private ClassDataControlUi _classDataControl;
         private TeachersDataControlUi _teachersDataControl;
+        private HoursDataControlUi _hoursDataControl;
         private GameObject _parentGo;
 
         protected void Setup()
@@ -33,14 +34,15 @@ namespace UTS
             AddTab("Materias", 0);
             AddTab("Maestros", 1);
             AddTab("Salones", 2);
-            //AddTab("Horarios", 3);
+            AddTab("Horarios", 3);
 
             _classDataControl = gameObject.AddComponent<ClassDataControlUi>();
             _teachersDataControl = gameObject.AddComponent<TeachersDataControlUi>();
+            _hoursDataControl = gameObject.AddComponent<HoursDataControlUi>();
 
             _classDataControl.Setup(parentGo);
             _teachersDataControl.Setup(parentGo);
-
+            _hoursDataControl.Setup(parentGo);
 
             var adds = parentGo.Find("Adds");
             var add = adds.Find("Add").GetComponent<Button>();
@@ -71,6 +73,8 @@ namespace UTS
             _classDataControl.ShowMainUi(index == 0);
             _teachersDataControl.ShowMainUi(index == 1);
 
+            _hoursDataControl.ShowMainUi(index == 3);
+
         }
 
         private void OnAdd()
@@ -84,6 +88,9 @@ namespace UTS
                     _teachersDataControl.AddData();
                     break;
                 case 2:
+                    break;
+                case 3:
+                    _hoursDataControl.AddData();
                     break;
             }
         }
@@ -101,6 +108,7 @@ namespace UTS
                 case DisplayWindowAction.UpdateData:
                     _classDataControl.UpdateData();
                     _teachersDataControl.UpdateData();
+                    _hoursDataControl.UpdateData();
                     break;
             }
         }
