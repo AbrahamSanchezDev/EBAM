@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UTS
 {
-    public class ClassDataControlUi : BaseDataControlUi
+    public class ClassRoomsControlUi : BaseDataControlUi
     {
         public override void UpdateData()
         {
@@ -13,11 +13,11 @@ namespace UTS
             var data = SchoolInfo.CurInfo;
             var prefabs = PrefabRefs.Instance;
             
-            for (int i = 1; i < data.ClassInfo.Count; i++)
+            for (int i = 1; i < data.ClassRooms.Count; i++)
             {
-                var cur = data.ClassInfo[i];
+                var cur = data.ClassRooms[i];
                 var but = Instantiate(prefabs.ClassButton, _scroll.content);
-                but.SetData(cur.TheName, cur.GetColor());
+                but.SetData(cur.Name);
                 var index = i;
                 but.OnClick.AddListener(() => { EditDataOn(index); });
             }
@@ -31,27 +31,23 @@ namespace UTS
             base.EditDataOn(index);
             _infoUi.SetEvents(CancelEdit, () => UpdateDataAt(index), () => DeleteAt(index));
 
-            var data = SchoolInfo.CurInfo.ClassInfo[index];
-            _infoUi._inputUi.SetDisplayText("Nombre de Materia", data.TheName);
-
-            _infoUi.SetTheColor(data.GetColor());
+            var data = SchoolInfo.CurInfo.ClassRooms[index];
+            _infoUi._inputUi.SetDisplayText("Nombre de Salon", data.Name);
 
         }
 
         protected override void DeleteAt(int index)
         {
             base.DeleteAt(index);
-            SchoolInfo.CurInfo.ClassInfo.RemoveAt(index);
+            SchoolInfo.CurInfo.ClassRooms.RemoveAt(index);
             SchoolInfo.CurInfo.Save();
             UpdateData();
+
         }
         protected override void UpdateDataAt(int index) {
-            var data = SchoolInfo.CurInfo.ClassInfo[index];
-            var curColor = _infoUi.GetColor();
+            var data = SchoolInfo.CurInfo.ClassRooms[index];          
 
-            data.SetColor(curColor);
-
-            data.TheName = _infoUi._inputUi.GetText();
+            data.Name = _infoUi._inputUi.GetText();
 
             Show(true);
 
@@ -66,16 +62,15 @@ namespace UTS
         {
             base.AddData();
             _infoUi.SetEvents(CancelEdit, AddTheCurrentData);
-            _infoUi._inputUi.SetDisplayText("Nombre de Materia", "");
-            _infoUi.SetTheColor(Color.white);
+            _infoUi._inputUi.SetDisplayText("Nombre de Salon", "");
         }
         protected override void AddTheCurrentData()
         {
             if (_infoUi.GetInputText() == "") return;
-            var theNewData = new ClassData();
-            theNewData.SetColor(_infoUi.GetColor());
-            theNewData.TheName = _infoUi.GetInputText();
-            SchoolInfo.CurInfo.AddClassInfo(theNewData);
+
+            var theNewData = new RoomInfo(_infoUi.GetInputText());          
+         
+            SchoolInfo.CurInfo.AddRoomInfo(theNewData);
             base.AddTheCurrentData();
         }
     }

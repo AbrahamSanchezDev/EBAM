@@ -50,10 +50,11 @@ namespace UTS
 
             MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             SchoolInfo.CurInfo.Save();
+            UpdateData();
         }
-      
-        #endregion       
-       
+
+        #endregion
+
         public override void AddData()
         {
             base.AddData();
