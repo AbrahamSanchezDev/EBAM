@@ -61,6 +61,10 @@ namespace UTS
 
         public string GetTeacher(int index)
         {
+            if(index <= Teachers.Count)
+            {
+                return "No Maestro";
+            }
             return Teachers[index];
         }
 

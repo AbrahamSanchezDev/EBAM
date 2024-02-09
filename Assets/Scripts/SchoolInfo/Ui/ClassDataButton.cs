@@ -42,7 +42,10 @@ namespace UTS
             if (_image)
             _image.color = theColor;
         }
-
+        public string GetText()
+        {
+            return _theText.text;
+        }
         public void SetData(string theText)
         {
             Setup();

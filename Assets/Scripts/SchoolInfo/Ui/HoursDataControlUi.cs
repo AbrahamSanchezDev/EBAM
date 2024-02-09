@@ -124,6 +124,7 @@ namespace UTS
                     break;
                 }
             }
+            MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             UpdateData();
             data.Save();
 
@@ -142,6 +143,7 @@ namespace UTS
                     break;
                 }
             }
+            MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             UpdateData();
             data.Save();
 
@@ -166,6 +168,7 @@ namespace UTS
 
             MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             data.Save();
+            UpdateData();
         }
 
         #endregion
@@ -194,6 +197,8 @@ namespace UTS
 
             var data = ClassesInfo.CurSchedule;
             data.AllDays.Add(_hoursUi.CurInfo());
+            MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
+            UpdateData();
             data.Save();
             base.AddTheCurrentData();
 

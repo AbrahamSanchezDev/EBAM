@@ -85,5 +85,15 @@ namespace UTS
             Show(true);
         }
 
+        protected void OrderButtons(List<ClassDataButton> curButs)
+        {
+            curButs.Sort((a, b) => a.GetText().CompareTo(b.GetText()));
+            for (int i = 0; i < curButs.Count; i++)
+            {
+                curButs[i].transform.SetAsLastSibling();
+
+            }
+        }
+
     }
 }

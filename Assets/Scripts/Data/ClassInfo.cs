@@ -52,7 +52,7 @@
                 case 2:
                     return "Martes";
                 case 3:
-                    return "Miercoles";
+                    return "Miércoles";
                 case 4:
                     return "Jueves";
                 case 5:

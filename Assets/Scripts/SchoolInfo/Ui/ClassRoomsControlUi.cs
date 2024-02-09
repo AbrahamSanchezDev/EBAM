@@ -12,7 +12,9 @@ namespace UTS
             base.UpdateData();
             var data = SchoolInfo.CurInfo;
             var prefabs = PrefabRefs.Instance;
-            
+
+            var buts = new List<ClassDataButton>();
+
             for (int i = 1; i < data.ClassRooms.Count; i++)
             {
                 var cur = data.ClassRooms[i];
@@ -20,7 +22,9 @@ namespace UTS
                 but.SetData(cur.Name);
                 var index = i;
                 but.OnClick.AddListener(() => { EditDataOn(index); });
+                buts.Add(but);
             }
+            OrderButtons(buts);
         }
 
         #region EditContent
@@ -44,8 +48,9 @@ namespace UTS
             UpdateData();
 
         }
-        protected override void UpdateDataAt(int index) {
-            var data = SchoolInfo.CurInfo.ClassRooms[index];          
+        protected override void UpdateDataAt(int index)
+        {
+            var data = SchoolInfo.CurInfo.ClassRooms[index];
 
             data.Name = _infoUi._inputUi.GetText();
 
@@ -55,9 +60,9 @@ namespace UTS
             SchoolInfo.CurInfo.Save();
             UpdateData();
         }
-      
-        #endregion       
-       
+
+        #endregion
+
         public override void AddData()
         {
             base.AddData();
@@ -68,8 +73,8 @@ namespace UTS
         {
             if (_infoUi.GetInputText() == "") return;
 
-            var theNewData = new RoomInfo(_infoUi.GetInputText());          
-         
+            var theNewData = new RoomInfo(_infoUi.GetInputText());
+
             SchoolInfo.CurInfo.AddRoomInfo(theNewData);
             base.AddTheCurrentData();
         }
