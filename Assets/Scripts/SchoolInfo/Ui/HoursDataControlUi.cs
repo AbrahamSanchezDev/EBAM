@@ -110,6 +110,8 @@ namespace UTS
         protected override void EditDataOn(int index)
         {
             base.EditDataOn(index);
+
+            Debug.Log("EDIT ON " + index);
             _infoUi.Show(false);
 
             _hoursUi.Show(true);
@@ -196,6 +198,15 @@ namespace UTS
             //if (_infoUi.GetInputText() == "") return;            
 
             var data = ClassesInfo.CurSchedule;
+            if (data.AllDays == null)
+            {
+                data.AllDays = new List<ClassInfo>();
+            }
+            Debug.Log(data);
+            Debug.Log(data.AllDays);
+            Debug.Log(_hoursUi);
+
+
             data.AllDays.Add(_hoursUi.CurInfo());
             MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             UpdateData();

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "901758928354",
+    "project_id": "ebam-8dd5a",
+    "storage_bucket": "ebam-8dd5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901758928354:android:a15cf9fbcfc873990025bb",
+        "android_client_info": {
+          "package_name": "com.WorldsDev.EBAM"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoD2e1vcj96bs70p0hQqit2j0YrgehIPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

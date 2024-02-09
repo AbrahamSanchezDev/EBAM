@@ -47,15 +47,20 @@ namespace UTS
 
         public void FillDays()
         {
-            if (AllDays.Count == 0) {
+            if (AllDays == null)
+            {
+                AllDays = new List<ClassInfo>();
+            }
+            if (AllDays.Count == 0)
+            {
                 Debug.Log("NO DATA ON ALL DAYS");
                 return;
-                    };
+            };
 
             //Remove empty slots
             for (int i = 0; i < AllDays.Count; i++)
             {
-                if (AllDays[i].ClassId ==  0 && AllDays[i].ClassRoomId == 0 && AllDays[i].TeacherId == 0)
+                if (AllDays[i].ClassId == 0 && AllDays[i].ClassRoomId == 0 && AllDays[i].TeacherId == 0)
                 {
                     AllDays.RemoveAt(i);
                     i--;
@@ -84,7 +89,7 @@ namespace UTS
             //AddExisting
             for (int i = 0; i < AllDays.Count; i++)
             {
-                if(AllDays[i].Day == day)
+                if (AllDays[i].Day == day)
                 {
                     theDayData.Add(AllDays[i]);
                 }
@@ -105,7 +110,7 @@ namespace UTS
             return theDayData;
 
         }
-        private bool HasTimeInList(List<ClassInfo> data,int time)
+        private bool HasTimeInList(List<ClassInfo> data, int time)
         {
 
             for (int i = 0; i < data.Count; i++)
@@ -121,7 +126,7 @@ namespace UTS
         public List<string> GetHoursText()
         {
             var list = new List<string>();
-      
+
             for (int i = 0; i < Hours.Length; i++)
             {
                 list.Add(Hours[i].Hora);
@@ -174,6 +179,7 @@ namespace UTS
                 Save();
                 return this;
             }
+
             return SaveLoadData<ClassSchedule>.Load(SaveFileName);
             //var path = Application.persistentDataPath + "/MyClasses.json";
             //var theText = File.ReadAllText(path);
