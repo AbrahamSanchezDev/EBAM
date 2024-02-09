@@ -23,17 +23,22 @@ namespace UTS
 
         public virtual void UpdateData()
         {
+            RemoveOldcontent();
+        }
+
+        protected void RemoveOldcontent()
+        {
             while (_scroll.content.GetChildCount() > 0)
             {
                 DestroyImmediate(_scroll.content.GetChild(0).gameObject);
             }
         }
-        protected void Show(bool show)
+        protected virtual void Show(bool show)
         {
             _mainGo.SetActive(show);
         }
 
-        protected void StartAddUi()
+        protected virtual void StartAddUi()
         {
             Show(false);
             if(_infoUi)
@@ -46,7 +51,7 @@ namespace UTS
             _infoUi.Show(true);
         }
 
-        public void ShowMainUi(bool show)
+        public virtual void ShowMainUi(bool show)
         {
             _scroll.gameObject.SetActive(show);
         }
@@ -78,6 +83,16 @@ namespace UTS
         {
             UpdateData();
             Show(true);
+        }
+
+        protected void OrderButtons(List<ClassDataButton> curButs)
+        {
+            curButs.Sort((a, b) => a.GetText().CompareTo(b.GetText()));
+            for (int i = 0; i < curButs.Count; i++)
+            {
+                curButs[i].transform.SetAsLastSibling();
+
+            }
         }
 
     }

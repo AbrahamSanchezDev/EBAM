@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace UTS
 {
@@ -26,7 +27,7 @@ namespace UTS
         }
 
 
-        public void SetClassInfo(ClassInfo info)
+        public bool SetClassInfo(ClassInfo info)
         {
             Setup();
 
@@ -51,9 +52,13 @@ namespace UTS
                 _teacher.text = "";
                 image.enabled = false;
                 _description.text = "";
+                return false;
             }
+
+            return true;
         }
 
+        [SerializeField]
         private ClassInfo _info;
 
         [ContextMenu("Get Info")]
@@ -72,6 +77,35 @@ namespace UTS
             var size = theTransform.sizeDelta;
             size.y = height * duration;
             theTransform.sizeDelta = size;
+        }
+
+        public void UpdateHeight()
+        {
+            //var parentSize = transform.parent.parent.GetComponent<RectTransform>();
+            //var rect = transform.parent.parent.GetComponent<HorizontalLayoutGroup>();
+            //if (rect) LayoutRebuilder.ForceRebuildLayoutImmediate(parentSize);
+
+            var height = 111.6667f;
+            var duration = _info.Duration;
+
+            if (duration < 1) duration = 1;
+
+            var theTransform = GetComponent<RectTransform>();
+            var size = theTransform.sizeDelta;
+            size.y = height * duration;
+            theTransform.sizeDelta = size;
+        }
+
+        public void SetClickable(UnityAction onClick)
+        {
+            var but = GetComponent<Button>();
+       
+            if(but == null)
+            {
+                but = gameObject.AddComponent<Button>();
+            }
+            but.onClick.RemoveAllListeners();
+            but.onClick.AddListener(onClick);
         }
     }
 }

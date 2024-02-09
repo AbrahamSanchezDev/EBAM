@@ -31,6 +31,24 @@ namespace UTS
             }
         }
 
+        public List<string> ClassInfoNames()
+        {
+            var list = new List<string>();
+            for (int i = 0; i < ClassInfo.Count; i++)
+            {
+                list.Add(ClassInfo[i].TheName);
+            }
+            return list;
+        }
+        public List<string> ClassRoomsNames()
+        {
+            var list = new List<string>();
+            for (int i = 0; i < ClassRooms.Count; i++)
+            {
+                list.Add(ClassRooms[i].Name);
+            }
+            return list;
+        }
 
         public ClassData GetClassInfo(int index)
         {
@@ -43,11 +61,19 @@ namespace UTS
 
         public string GetTeacher(int index)
         {
+            if(index <= Teachers.Count)
+            {
+                return "No Maestro";
+            }
             return Teachers[index];
         }
 
         public RoomInfo GetRoomInfo(int index)
         {
+            if(index >= ClassRooms.Count)
+            {
+                return ClassRooms[ClassRooms.Count - 1];
+            }
             return ClassRooms[index];
         }
 
@@ -71,22 +97,22 @@ namespace UTS
             AddClassInfo("Desarrollo de habilidades del pensamiento lógico",128f / 255f, 255f / 255f, 0);
             AddClassInfo("Formación sociocultural 1", 110f / 255f, 255f / 255f, 216f / 255f);
 
-            Teachers.Add(" ");
-            Teachers.Add("Karla Paola Capetillo Camacho");
-            Teachers.Add("David Rodríguez V.");
-            Teachers.Add("Gustavo Cruz B.");
-            Teachers.Add("Edgar Geovanni Barrera C.");
-            Teachers.Add("Marco Aurelio Ramírez S.");
-            Teachers.Add("Jesús Eduardo Gasca B.");
+            AddTeacher(" ");
+            AddTeacher("Karla Paola Capetillo Camacho");
+            AddTeacher("David Rodríguez V.");
+            AddTeacher("Gustavo Cruz B.");
+            AddTeacher("Basilio Angeles Kevin Axl");
+            AddTeacher("Marco Aurelio Ramírez S.");
+            AddTeacher("Jesús Eduardo Gasca B.");
 
-            ClassRooms.Add(new RoomInfo("D209"));
-            ClassRooms.Add(new RoomInfo("Lab1"));
-            ClassRooms.Add(new RoomInfo("Lab2"));
-            ClassRooms.Add(new RoomInfo("Lab3"));
-            ClassRooms.Add(new RoomInfo("Lab4"));
-            ClassRooms.Add(new RoomInfo("Lab5"));
-            ClassRooms.Add(new RoomInfo("Lab6"));
-            ClassRooms.Add(new RoomInfo("Lab7"));
+            AddRoomInfo(new RoomInfo("D209"));
+            AddRoomInfo(new RoomInfo("Lab1"));
+            AddRoomInfo(new RoomInfo("Lab2"));
+            AddRoomInfo(new RoomInfo("Lab3"));
+            AddRoomInfo(new RoomInfo("Lab4"));
+            AddRoomInfo(new RoomInfo("Lab5"));
+            AddRoomInfo(new RoomInfo("Lab6"));
+            AddRoomInfo(new RoomInfo("Lab7"));
 
 
             Save();
@@ -111,6 +137,11 @@ namespace UTS
         public void AddTeacher(string theName)
         {
             Teachers.Add(theName);
+        }
+
+        public void AddRoomInfo(RoomInfo info)
+        {
+            ClassRooms.Add(info);
         }
 
         public void Save()

@@ -12,7 +12,8 @@ namespace UTS
             base.UpdateData();
             var data = SchoolInfo.CurInfo;
             var prefabs = PrefabRefs.Instance;
-            
+
+            var buts = new List<ClassDataButton>();
             for (int i = 1; i < data.ClassInfo.Count; i++)
             {
                 var cur = data.ClassInfo[i];
@@ -20,7 +21,9 @@ namespace UTS
                 but.SetData(cur.TheName, cur.GetColor());
                 var index = i;
                 but.OnClick.AddListener(() => { EditDataOn(index); });
+                buts.Add(but);
             }
+            OrderButtons(buts);
         }
 
         #region EditContent
@@ -42,11 +45,11 @@ namespace UTS
         {
             base.DeleteAt(index);
             SchoolInfo.CurInfo.ClassInfo.RemoveAt(index);
-            UpdateData();
             SchoolInfo.CurInfo.Save();
-
+            UpdateData();
         }
-        protected override void UpdateDataAt(int index) {
+        protected override void UpdateDataAt(int index)
+        {
             var data = SchoolInfo.CurInfo.ClassInfo[index];
             var curColor = _infoUi.GetColor();
 
@@ -58,10 +61,11 @@ namespace UTS
 
             MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             SchoolInfo.CurInfo.Save();
+            UpdateData();
         }
-      
-        #endregion       
-       
+
+        #endregion
+
         public override void AddData()
         {
             base.AddData();

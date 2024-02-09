@@ -31,7 +31,15 @@ namespace UTS
 
         public ClassDataButton ClassButton;
 
+
+        public HourUiDisplay HourDisplay;
+        //public ClassDataButton HourButton;
+        public DropDownInputUiObj dropDownInputUi;
+
         public ScrollRect DisplayScrollView;
+
+        public ScrollRect DisplayHoursScrollView;
+        public DaysUiControl DaysContainer;
 
     }
 }

@@ -16,4 +16,8 @@ MonoBehaviour:
   TheHourUiDisplay: {fileID: 6497549768019116226, guid: 8423d4a8ede3c0b418dc565afe79b1ec, type: 3}
   TabButtons: {fileID: 6788336810181880525, guid: b301ce193e07de541a82b977d02c4c07, type: 3}
   ClassButton: {fileID: 3755389935892933135, guid: 47bc9a6372677e24687e122f5efd5392, type: 3}
+  HourDisplay: {fileID: 6497549768019116226, guid: 8423d4a8ede3c0b418dc565afe79b1ec, type: 3}
+  dropDownInputUi: {fileID: 6978232414534168143, guid: fd207781586aa14438fd927d406dc369, type: 3}
   DisplayScrollView: {fileID: 7301170215638802311, guid: c38c853ff1c50ee4f91d12cc0db5e796, type: 3}
+  DisplayHoursScrollView: {fileID: 2203136469255637298, guid: 5a1e7d10d3def324c8913166fb80a644, type: 3}
+  DaysContainer: {fileID: 1702890438955867097, guid: 52de569d54876884d8f6d505305372bb, type: 3}

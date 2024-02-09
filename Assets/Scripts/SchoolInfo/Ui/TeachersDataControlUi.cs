@@ -12,7 +12,9 @@ namespace UTS
             base.UpdateData();
             var data = SchoolInfo.CurInfo;
             var prefabs = PrefabRefs.Instance;
-            
+
+            var curButs = new List<ClassDataButton>();
+
             for (int i = 1; i < data.Teachers.Count; i++)
             {
                 var cur = data.Teachers[i];
@@ -20,9 +22,12 @@ namespace UTS
                 but.SetData(cur);
                 var index = i;
                 but.OnClick.AddListener(() => { EditDataOn(index); });
+                curButs.Add(but);
             }
-        }
 
+            OrderButtons(curButs);
+        }
+      
         #region EditContent
 
 
@@ -50,10 +55,11 @@ namespace UTS
 
             MainSetup.DisplayWindowAction.Invoke(DisplayWindowAction.UpdateData);
             SchoolInfo.CurInfo.Save();
+            UpdateData();
         }
-      
-        #endregion       
-       
+
+        #endregion
+
         public override void AddData()
         {
             base.AddData();

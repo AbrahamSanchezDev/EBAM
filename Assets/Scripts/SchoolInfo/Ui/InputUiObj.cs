@@ -45,10 +45,12 @@ namespace UTS
         }
         public void SetText(string theText)
         {
+            Setup();
             _input.text = theText;
         }
         public void SetDisplayText(string theText)
         {
+            Setup();
             _theText.text = theText + ": ";
         }
 

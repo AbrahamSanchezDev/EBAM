@@ -108,7 +108,7 @@ namespace UTS
             OnCancel = onCancel;
             OnSave = onSave;
             OnDelete = onDelete;
-            ShowCancel(OnDelete != null);
+            ShowCancel(OnCancel != null);
             ShowSave(OnSave != null);
             ShowDelete(OnDelete != null);
         }

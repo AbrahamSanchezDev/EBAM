@@ -256,6 +256,9 @@ namespace UTS
 
             var CurSchedule = ClassesInfo.CurSchedule;
 
+            CurSchedule.FillDays();
+
+
             AddDay(1, CurSchedule.Day1);
             AddDay(2, CurSchedule.Day2);
             AddDay(3, CurSchedule.Day3);
