@@ -59,3 +59,9 @@ sysinfo.txt
 crashlytics-build.properties
 
 [Aa]ssets/StreamingAssets
+[Aa]ssets/Firebase
+[Aa]ssets/googleSignIn
+[Aa]ssets/ExternalDependencyManager
+[Aa]ssets/GeneratedLocalRepo
+[Aa]ssets/Plugins
+[Aa]ssets/Editor Default Resources
