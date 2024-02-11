@@ -15,6 +15,9 @@ namespace UTS
 
         public void LoadLocal()
         {
+            TheClassSchedule = new ClassSchedule();
+            TheSchoolInfo = new SchoolInfo();
+
             TheClassSchedule = TheClassSchedule.Load();
             TheSchoolInfo = SchoolInfo.Load();
         }

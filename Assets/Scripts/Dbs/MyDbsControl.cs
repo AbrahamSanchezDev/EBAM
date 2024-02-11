@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Firebase.Auth;
+using Firebase.Database;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,12 +13,13 @@ namespace UTS
 
         private AddInfoUi _addInfoUi => AddInfoUi.Instance;
 
+        private DatabaseReference reference;
+
         protected void Awake()
         {
             Setup();
-
-            //DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         }
+
 
         protected void Setup()
         {
@@ -53,6 +56,31 @@ namespace UTS
 
             var theName = _addInfoUi._inputUi.GetText();
             Debug.Log(theName);
+
+            var fullName = theName;
+            var data = new DBInfo();
+            data.LoadLocal();
+
+
+            if (FirebaseAuth.DefaultInstance.CurrentUser != null)
+            {
+                fullName = FirebaseAuth.DefaultInstance.CurrentUser.Email + "_" + theName;
+
+                data.Creator = FirebaseAuth.DefaultInstance.CurrentUser.Email;
+            }
+
+            data.Name = theName;
+
+
+            string json = JsonUtility.ToJson(data);
+
+
+            reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+
+            reference.Child("dbs").Child(fullName).SetRawJsonValueAsync(json);
+
+            Debug.Log("SAVED! " + fullName);
         }
     }
 }
