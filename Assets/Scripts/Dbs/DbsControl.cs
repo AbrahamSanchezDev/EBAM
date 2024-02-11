@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-//using Firebase.Auth;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase.Auth;
@@ -13,6 +12,7 @@ namespace UTS
     public class DbsControl : MonoBehaviour
     {
         public GameObject SignInGo, LoggedInGo;
+        public GameObject LogInGo;
 
         private GoogleLoginControl _googleLoginControl;
 
@@ -21,8 +21,24 @@ namespace UTS
 
         protected void Awake()
         {
-            _googleLoginControl = gameObject.AddComponent<GoogleLoginControl>();
+            SetupLogin();
+        }
 
+        protected void OnEnable()
+        {
+            GoogleLoginControl.OnUserLoadedEvent.AddListener(CheckUser);
+        }
+
+        protected void OnDisable()
+        {
+            GoogleLoginControl.OnUserLoadedEvent.RemoveListener(CheckUser);
+        }
+
+        #region GoogleSignIn
+
+        private void SetupLogin()
+        {
+            _googleLoginControl = gameObject.AddComponent<GoogleLoginControl>();
 
             var parentSign = SignInGo.transform.Find("ParentObj");
             var signInButton = parentSign.Find("SignInButton").GetComponent<Button>();
@@ -38,18 +54,7 @@ namespace UTS
             var logOutButton = loggedInParent.Find("LogOutButton").GetComponent<Button>();
             logOutButton.onClick.AddListener(LogOutFromGoogle);
 
-
             CheckUser(null);
-        }
-
-        protected void OnEnable()
-        {
-            GoogleLoginControl.OnUserLoadedEvent.AddListener(CheckUser);
-        }
-
-        protected void OnDisable()
-        {
-            GoogleLoginControl.OnUserLoadedEvent.RemoveListener(CheckUser);
         }
 
         private void SignToGoogle()
@@ -60,8 +65,6 @@ namespace UTS
         private void LogOutFromGoogle()
         {
             _googleLoginControl.SignOutFromGoogle();
-            //_googleLoginControl.OnDisconnect();
-            //CheckUser(null);
         }
 
         private void CheckUser(FirebaseUser user)
@@ -75,14 +78,15 @@ namespace UTS
                 _email.text = user.Email;
                 _logText.text = "";
                 if (user.PhotoUrl != null)
-                {
                     StartCoroutine(nameof(LoadProfilePic), user.PhotoUrl.AbsoluteUri);
-                }
                 else
-                {
                     _logText.text = "No existe foto";
-                }
             }
+        }
+
+        private void ShowLoginSignIn(bool show)
+        {
+            LogInGo.SetActive(show);
         }
 
         private IEnumerator LoadProfilePic(string url)
@@ -100,6 +104,11 @@ namespace UTS
                 _logText.text = "No Image found!";
             }
         }
+
+        #endregion
+
+
+
 
         protected IEnumerator Start()
         {

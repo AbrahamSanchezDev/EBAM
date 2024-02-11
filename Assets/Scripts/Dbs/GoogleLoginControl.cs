@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
 using Google;
-using TMPro;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace UTS
 {
@@ -60,7 +57,7 @@ namespace UTS
         private FirebaseAuth auth;
         private GoogleSignInConfiguration configuration;
 
-        private void Awake()
+        protected void Awake()
         {
             configuration = new GoogleSignInConfiguration
                 {WebClientId = webClientId, RequestEmail = true, RequestIdToken = true};
@@ -198,6 +195,7 @@ namespace UTS
         private void AddToInformation(string str)
         {
             //infoText.text += "\n" + str;
+            OnLogEvent?.Invoke(str);
         }
 
         public static UnityEvent<string> OnLogEvent = new UnityEvent<string>();
