@@ -129,6 +129,7 @@ namespace UTS
             {
                 data = new ClassInfo(1, 1, 1, HourByName.at700am, HourByName.at800am,DaysByNam.Lunes);
             }
+            Debug.Log(data);
             //Description.SetText(data.Description);
             var info = SchoolInfo.CurInfo;
             var classes = ClassesInfo.CurSchedule;

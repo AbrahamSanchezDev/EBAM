@@ -50,7 +50,9 @@ namespace UTS
             _week = topMenu.transform.Find("Week").GetComponent<Button>();
 
             _settings = topMenu.transform.Find("Edit").GetComponent<Button>();
+            var dbs = topMenu.transform.Find("Dbs").GetComponent<Button>();
 
+            dbs.onClick.AddListener(ShowDbs);
             _today.onClick.AddListener(ShowToday);
             _week.onClick.AddListener(ShowWeek);
             _settings.onClick.AddListener(ShowSettings);
@@ -231,6 +233,11 @@ namespace UTS
             }
 
             UpdateCurrentVisual();
+        }
+
+        public void ShowDbs()
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Dbs");
         }
 
         private void UpdateCurrentVisual()

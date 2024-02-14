@@ -98,12 +98,11 @@ namespace UTS
             AddClassInfo("Formación sociocultural 1", 110f / 255f, 255f / 255f, 216f / 255f);
 
             AddTeacher(" ");
-            AddTeacher("Karla Paola Capetillo Camacho");
-            AddTeacher("David Rodríguez V.");
-            AddTeacher("Gustavo Cruz B.");
+            AddTeacher("Estrada Cirtéz Oscar Miguel");
+            AddTeacher("Hernandez Ramirez miriam Aide");
+            AddTeacher("Almanza Savedra Rodrigo");
             AddTeacher("Basilio Angeles Kevin Axl");
-            AddTeacher("Marco Aurelio Ramírez S.");
-            AddTeacher("Jesús Eduardo Gasca B.");
+            AddTeacher("Osorio valdez Dora Alicia");
 
             AddRoomInfo(new RoomInfo("D209"));
             AddRoomInfo(new RoomInfo("Lab1"));

@@ -64,10 +64,8 @@ namespace UTS
         {
             var prefabs = PrefabRefs.Instance;
             var theClassesBut = Instantiate(prefabs.TabButtons, _tabs);
-            var theText = theClassesBut.GetComponentInChildren<TextMeshProUGUI>();
-            theText.text = displayText;
 
-            theClassesBut.onClick.AddListener((() => OnPressTab(index)));
+            theClassesBut.Setup((() => OnPressTab(index)),displayText);           
         }
 
         private void OnPressTab(int index)

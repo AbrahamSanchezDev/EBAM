@@ -17,7 +17,6 @@ namespace UTS
                 {
                     return _instance;
                 }
-
                 _instance = Resources.Load<PrefabRefs>("PrefabRefs");
                 return _instance;
             }
@@ -27,7 +26,7 @@ namespace UTS
         public HourUiDisplay TheHourUiDisplay;
 
         [Header("School Info")]
-        public Button TabButtons;
+        public ButtonControl TabButtons;
 
         public ClassDataButton ClassButton;
 
@@ -40,6 +39,7 @@ namespace UTS
 
         public ScrollRect DisplayHoursScrollView;
         public DaysUiControl DaysContainer;
+
 
     }
 }

@@ -1,0 +1,131 @@
+{
+    "m_SelectedDeviceId": "R5CTA0S589P",
+    "m_SelectedPackage": {
+        "deviceId": "R5CTA0S589P",
+        "name": "com.WorldsDev.EBAM",
+        "processId": 30212,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 25669,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 26164,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.sec.android.app.launcher",
+            "processId": 14539,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 26763,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 27397,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 27964,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 28470,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 28627,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 29030,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 29718,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 30212,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_Filter": "",
+    "m_FilterIsRegularExpression": false,
+    "m_SymbolPaths": []
+}

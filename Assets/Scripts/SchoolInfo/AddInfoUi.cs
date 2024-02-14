@@ -9,7 +9,7 @@ namespace UTS
     {
         private GameObject _parentGo, _inputsGo, _numbersGo, _colorGo, _contentGo, _buttonsGo;
 
-        public InputUiObj _inputUi, _numbersUi, _colorsUi;
+        [HideInInspector] public InputUiObj _inputUi, _numbersUi, _colorsUi;
 
 
         private GameObject _cancelGo, _saveGo, _deleteGo;
@@ -102,7 +102,7 @@ namespace UTS
 
         #region Buttons
 
-        public void SetEvents(UnityAction onCancel, UnityAction onSave = null,UnityAction onDelete = null)
+        public void SetEvents(UnityAction onCancel, UnityAction onSave = null, UnityAction onDelete = null)
         {
             HideAllButtons();
             OnCancel = onCancel;
@@ -112,16 +112,19 @@ namespace UTS
             ShowSave(OnSave != null);
             ShowDelete(OnDelete != null);
         }
+
         private void DoCancel()
         {
             OnCancel?.Invoke();
             Clear();
         }
+
         private void DoSave()
         {
             OnSave?.Invoke();
             Clear();
         }
+
         private void DoDelete()
         {
             OnDelete?.Invoke();
@@ -132,14 +135,17 @@ namespace UTS
         {
             _cancelGo.SetActive(show);
         }
+
         public void ShowSave(bool show)
         {
             _saveGo.SetActive(show);
         }
+
         public void ShowDelete(bool show)
         {
             _deleteGo.SetActive(show);
         }
+
         #endregion
 
         public void HideAllButtons()
@@ -148,24 +154,28 @@ namespace UTS
             ShowSave(false);
             ShowDelete(false);
         }
+
         public void HideAllInputs()
         {
             ShowColors(false);
             ShowNumbers(false);
             ShowColorPicker(false);
         }
+
         #region
 
         public void ShowNumbers(bool show)
         {
             _numbersGo.SetActive(show);
         }
+
         public void ShowColors(bool show)
         {
             _colorGo.SetActive(show);
         }
 
         #endregion
+
         public void Clear()
         {
             Show(false);
@@ -175,14 +185,16 @@ namespace UTS
             OnDelete = null;
             OnCancel = null;
         }
+
         private void ConfirmColorPick()
         {
             SetTheColor(GetColor());
             HideColorPicker();
         }
+
         private void HideColorPicker()
         {
-            ShowColorPicker(false);           
+            ShowColorPicker(false);
         }
 
         #region GetInfo
@@ -199,8 +211,8 @@ namespace UTS
 
         protected override void OnDisplayAction(DisplayWindowAction theAction)
         {
-            
         }
+
         #endregion
     }
 }
