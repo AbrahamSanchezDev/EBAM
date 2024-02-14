@@ -6,22 +6,48 @@ using Firebase.Auth;
 using TMPro;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Firebase.Database;
+using UnityEngine.Events;
+
 
 namespace UTS
 {
     public class DbsControl : MonoBehaviour
     {
+
+        public static UnityEvent<List<DBInfo>> OnDbsLoaded = new UnityEvent<List<DBInfo>>();
+
         public GameObject SignInGo, LoggedInGo;
         public GameObject LogInGo;
+        public MyDbsControl MyDbsControl;
 
         private GoogleLoginControl _googleLoginControl;
 
         private RawImage _user;
         private TMP_Text _name, _email, _logText;
 
+        public GameObject Tabs;
+
+
+
         protected void Awake()
         {
+            MyDbsControl.Setup();
             SetupLogin();
+
+            var prefabs = PrefabRefs.Instance;
+            var loginBut = Instantiate(prefabs.TabButtons, Tabs.transform);
+            loginBut.Setup(ShowLogin, "Login");
+
+            var dbsBut = Instantiate(prefabs.TabButtons, Tabs.transform);
+            dbsBut.Setup(ShowDbs, "DBs");
+
+
+            if (MyDbsControl.Instance)
+            {
+                MyDbsControl.Instance.ShowAddButton(false);
+            }
+            ShowLogin();
         }
 
         protected void OnEnable()
@@ -36,6 +62,61 @@ namespace UTS
 
         #region GoogleSignIn
 
+        #region GetDbs
+
+        private void LoadDbs()
+        {
+
+            var reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+            reference.Child("dbs").GetValueAsync().ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Debug.Log("FAIL to load " + task.Status);
+                }
+                else if (task.IsCompleted)
+                {
+                    var snap = task.Result;
+                    theData = new List<DBInfo>();
+                    foreach (DataSnapshot info in snap.Children)
+                    {
+                        var text = info.GetRawJsonValue();
+                        Debug.Log(string.Format("{0}: {1}", info.Key, text));
+                        var data = JsonUtility.FromJson<DBInfo>(text);
+                        theData.Add(data);
+                    }
+                }
+            });
+
+
+        }
+
+        private void ShowCurrentDbs()
+        {
+            OnDbsLoaded?.Invoke(theData);
+        }
+        private void ShowAddBut()
+        {
+            var show = FirebaseAuth.DefaultInstance.CurrentUser != null;
+
+#if UNITY_EDITOR
+            show = true;
+#endif
+            //Debug.Log(show);
+            if (MyDbsControl.Instance)
+            {
+                MyDbsControl.Instance.ShowAddButton(show);
+            }
+            else
+            {
+                Debug.Log("No INSTANCE");
+            }
+        }
+
+        public List<DBInfo> theData;
+
+        #endregion
         private void SetupLogin()
         {
             _googleLoginControl = gameObject.AddComponent<GoogleLoginControl>();
@@ -82,6 +163,7 @@ namespace UTS
                 else
                     _logText.text = "No existe foto";
             }
+
         }
 
         private void ShowLoginSignIn(bool show)
@@ -114,11 +196,33 @@ namespace UTS
         {
             yield return null;
             BackToPreviewsControl.ShowGoBack(BackToCalendar);
+
+            yield return new WaitForSeconds(1f);
+            LoadDbs();
         }
 
         private void BackToCalendar()
         {
             SceneManager.LoadScene("Main");
+        }
+
+        private void HideAllViews()
+        {
+            MyDbsControl.Show(false);
+            LogInGo.SetActive(false);
+        }
+        private void ShowLogin()
+        {
+            HideAllViews();
+            LogInGo.SetActive(true);
+
+        }
+        private void ShowDbs()
+        {
+            HideAllViews();
+            MyDbsControl.Show(true);
+            ShowCurrentDbs();
+            ShowAddBut();
         }
     }
 }

@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 8045039622394256666}
   - component: {fileID: 4095769107735348695}
   - component: {fileID: 6788336810181880525}
+  - component: {fileID: 6433529508602012480}
   m_Layer: 5
   m_Name: TabButton
   m_TagString: Untagged
@@ -171,7 +172,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8045039622394256666
 CanvasRenderer:
@@ -255,3 +256,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6433529508602012480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545194894166039093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb193bd53f5c6364187dd95a3b78c932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

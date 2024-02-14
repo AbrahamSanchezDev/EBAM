@@ -9,27 +9,47 @@ namespace UTS
 {
     public class MyDbsControl : MonoBehaviour
     {
+        public static MyDbsControl Instance;
+
         private GameObject _parentObj;
 
         private AddInfoUi _addInfoUi => AddInfoUi.Instance;
 
         private DatabaseReference reference;
 
+        private Button _addButton;
+
+        private Transform _dbsParent;
+        private ClassDataButton _dataButton;
+
         protected void Awake()
         {
+            Instance = this;
             Setup();
         }
 
 
-        protected void Setup()
+        public void Setup()
         {
+            if (_parentObj) return;
             _parentObj = transform.Find("ParentObj").gameObject;
 
-            var adds = _parentObj.transform.Find("Adds").transform.Find("Add").GetComponent<Button>();
+            _dbsParent = _parentObj.GetComponentInChildren<ScrollRect>().content;
+            _dataButton = PrefabRefs.Instance.ClassButton;
 
-            adds.onClick.AddListener(AddCurrent);
+            _addButton = _parentObj.transform.Find("Adds").transform.Find("Add").GetComponent<Button>();
+
+            _addButton.onClick.AddListener(AddCurrent);
         }
 
+        protected void OnEnable()
+        {
+            DbsControl.OnDbsLoaded.AddListener(ShowDbs);
+        }
+        protected void OnDisable()
+        {
+            DbsControl.OnDbsLoaded.RemoveListener(ShowDbs);
+        }
 
         public void Show(bool show)
         {
@@ -81,6 +101,37 @@ namespace UTS
             reference.Child("dbs").Child(fullName).SetRawJsonValueAsync(json);
 
             Debug.Log("SAVED! " + fullName);
+        }
+
+        public void ShowAddButton(bool show)
+        {
+            _addButton.gameObject.SetActive(show);
+            //Debug.Log("SHOWING ADD " + show);
+        }
+
+
+        public void ShowDbs(List<DBInfo> dbs)
+        {
+            if (_dbsParent)
+            {
+                for (int i = 0; i < _dbsParent.childCount; i++)
+                {
+                    DestroyImmediate(_dbsParent.GetChild(0).gameObject);
+                    i--;
+                }
+            }
+
+            Setup();
+            for (int i = 0; i < dbs.Count; i++)
+            {
+                var but = Instantiate(_dataButton, _dbsParent);
+                but.SetData(dbs[i].Name);
+                but.OnClick.AddListener(() =>
+                {
+                    dbs[i].LoadLocal();
+                });
+
+            }
         }
     }
 }

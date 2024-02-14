@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HoursParent: {fileID: 8638504696457310398, guid: c16769f7be4429041b0df5a8aea35171, type: 3}
   TheHourUiDisplay: {fileID: 6497549768019116226, guid: 8423d4a8ede3c0b418dc565afe79b1ec, type: 3}
-  TabButtons: {fileID: 6788336810181880525, guid: b301ce193e07de541a82b977d02c4c07, type: 3}
+  TabButtons: {fileID: 6433529508602012480, guid: b301ce193e07de541a82b977d02c4c07, type: 3}
   ClassButton: {fileID: 3755389935892933135, guid: 47bc9a6372677e24687e122f5efd5392, type: 3}
   HourDisplay: {fileID: 6497549768019116226, guid: 8423d4a8ede3c0b418dc565afe79b1ec, type: 3}
   dropDownInputUi: {fileID: 6978232414534168143, guid: fd207781586aa14438fd927d406dc369, type: 3}
