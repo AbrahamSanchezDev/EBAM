@@ -32,10 +32,12 @@ namespace UTS
 
         protected void Awake()
         {
+            
             MyDbsControl.Setup();
             SetupLogin();
 
             var prefabs = PrefabRefs.Instance;
+            Instantiate(prefabs.ConfirmUi);
             var loginBut = Instantiate(prefabs.TabButtons, Tabs.transform);
             loginBut.Setup(ShowLogin, "Login");
 

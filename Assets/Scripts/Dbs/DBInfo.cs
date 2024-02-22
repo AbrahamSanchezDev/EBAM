@@ -24,8 +24,9 @@ namespace UTS
 
         public void SaveToLocal()
         {
-            TheClassSchedule.Save();
             TheSchoolInfo.Save();
+
+            TheClassSchedule.Save();
         }
     }
 }

@@ -126,12 +126,30 @@ namespace UTS
             {
                 var but = Instantiate(_dataButton, _dbsParent);
                 but.SetData(dbs[i].Name);
+                int index = i;
                 but.OnClick.AddListener(() =>
                 {
-                    dbs[i].LoadLocal();
+                    //dbs[i].LoadLocal();
+                    LoadDb(dbs[index]);
                 });
 
             }
+        }
+
+        private void LoadDb(DBInfo info)
+        {
+            ConfirmUi.Instance.ShowOption("", null, () =>
+            {
+                info.SaveToLocal();
+                StartCoroutine(nameof(LoadMainSceneCo));
+            });
+        }
+
+        protected IEnumerator LoadMainSceneCo()
+        {
+            yield return new WaitForSeconds(0.1f);
+            BackToPreviewsControl.CallGoBack();
+
         }
     }
 }

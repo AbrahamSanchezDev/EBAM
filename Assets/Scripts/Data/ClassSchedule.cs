@@ -50,6 +50,7 @@ namespace UTS
             if (AllDays == null)
             {
                 AllDays = new List<ClassInfo>();
+                Debug.Log("NO ALL DAYS DATA!");
             }
             if (AllDays.Count == 0)
             {
@@ -80,6 +81,8 @@ namespace UTS
             {
                 AllDays[i].Index = i;
             }
+
+
             Debug.Log("SORTING!");
         }
 
@@ -179,7 +182,7 @@ namespace UTS
                 Save();
                 return this;
             }
-
+            //Debug.Log("Loading Schedule");
             return SaveLoadData<ClassSchedule>.Load(SaveFileName);
             //var path = Application.persistentDataPath + "/MyClasses.json";
             //var theText = File.ReadAllText(path);

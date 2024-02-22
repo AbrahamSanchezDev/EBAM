@@ -44,6 +44,14 @@ namespace UTS
         {
             _backUiGo.SetActive(show);
         }
+
+        public static void CallGoBack()
+        {
+            if (Instance)
+            {
+                Instance.DoGoBack();
+            }
+        }
         private void DoGoBack()
         {
             _backAction?.Invoke();

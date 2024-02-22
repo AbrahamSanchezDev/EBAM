@@ -41,5 +41,8 @@ namespace UTS
         public DaysUiControl DaysContainer;
 
 
+        public ConfirmUi ConfirmUi;
+
+
     }
 }

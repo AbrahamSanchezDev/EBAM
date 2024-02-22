@@ -51,6 +51,7 @@ namespace UTS
         {
             var info = new SchoolInfo();
             info.CreateTemplateData();
+            //Debug.Log("CreateSchoolInfo");
         }
 
         private void CreateMyClasses()

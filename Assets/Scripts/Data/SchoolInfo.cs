@@ -61,7 +61,7 @@ namespace UTS
 
         public string GetTeacher(int index)
         {
-            if(index <= Teachers.Count)
+            if(index >= Teachers.Count)
             {
                 return "No Maestro";
             }
@@ -82,9 +82,11 @@ namespace UTS
         {
             if (AlreadyExists())
             {
+                //Debug.Log("Loading Data");
                 Load();
                 return;
             }
+            Debug.Log("No Data Existed for the school!");
 
             AddClassInfo("");
             AddClassInfo("Ingles 1",160f/255f,160f / 255f, 254f / 255f);
@@ -172,6 +174,7 @@ namespace UTS
             CurInfo =  SaveLoadData<SchoolInfo>.Load(SaveFileName);
             return CurInfo;
 
+            Debug.Log("Loaded data");
             //var theText = File.ReadAllText(FilePath());
             //var data = JsonUtility.FromJson<SchoolInfo>(theText);
             //CurInfo = data;
