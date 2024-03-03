@@ -82,9 +82,9 @@ namespace UTS
             data.LoadLocal();
 
 
-            if (FirebaseAuth.DefaultInstance.CurrentUser != null)
+            if (FirebaseAuth.DefaultInstance != null && FirebaseAuth.DefaultInstance.CurrentUser != null)
             {
-                fullName = FirebaseAuth.DefaultInstance.CurrentUser.Email + "_" + theName;
+                fullName = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName + "_" + theName;
 
                 data.Creator = FirebaseAuth.DefaultInstance.CurrentUser.Email;
             }

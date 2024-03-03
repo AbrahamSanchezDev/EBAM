@@ -20,26 +20,7 @@ namespace UTS
     {
         public static OnUserLoaded OnUserLoadedEvent = new OnUserLoaded();
 
-        protected void CheckForDependencies()
-        {
-            Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-            {
-                var dependencyStatus = task.Result;
-                if (dependencyStatus == Firebase.DependencyStatus.Available)
-                {
-                    FirebaseAuth.DefaultInstance.StateChanged += HandleAuthStateChange;
-                }
-                else
-                {
-                    Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                    // Firebase Unity SDK is not safe to use here.
-                }
-            });
-        }
-
-        protected void OnEnable()
-        {
-        }
+       
 
         protected void OnDisable()
         {
@@ -59,9 +40,10 @@ namespace UTS
 
         protected IEnumerator Start()
         {
-            CheckForDependencies();
 
             yield return null;
+            CheckFirebaseDependencies();
+
             BackToPreviewsControl.ShowGoBack(BackToCalendar);
         }
 
@@ -79,7 +61,6 @@ namespace UTS
         {
             configuration = new GoogleSignInConfiguration
             { WebClientId = webClientId, RequestEmail = true, RequestIdToken = true };
-            CheckFirebaseDependencies();
         }
 
         private void CheckFirebaseDependencies()
@@ -91,7 +72,9 @@ namespace UTS
                     if (task.Result == DependencyStatus.Available)
                     {
                         auth = FirebaseAuth.DefaultInstance;
-                        CheckUser();
+
+                        FirebaseAuth.DefaultInstance.StateChanged += HandleAuthStateChange;
+                        //CheckUser();
                     }
 
                     else
@@ -103,6 +86,7 @@ namespace UTS
                 }
             });
         }
+      
 
         public void SignInWithGoogle()
         {

@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "R5CTA0S589P",
         "name": "com.WorldsDev.EBAM",
-        "processId": 30212,
+        "processId": 16913,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,67 +11,73 @@
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 25669,
+            "processId": 30212,
             "exited": true
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 26164,
+            "processId": 17649,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.whatsapp",
+            "processId": 4521,
+            "exited": false
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 18151,
+            "exited": true
+        },
+        {
+            "deviceId": "R5CTA0S589P",
+            "name": "com.WorldsDev.EBAM",
+            "processId": 19192,
             "exited": true
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.sec.android.app.launcher",
-            "processId": 14539,
+            "processId": 2845,
             "exited": false
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 26763,
+            "processId": 20089,
             "exited": true
         },
         {
             "deviceId": "R5CTA0S589P",
-            "name": "com.WorldsDev.EBAM",
-            "processId": 27397,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CTA0S589P",
-            "name": "com.WorldsDev.EBAM",
-            "processId": 27964,
-            "exited": true
-        },
-        {
-            "deviceId": "R5CTA0S589P",
-            "name": "com.WorldsDev.EBAM",
-            "processId": 28470,
+            "name": "com.sec.android.gallery3d",
+            "processId": 16515,
             "exited": false
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 28627,
+            "processId": 24179,
             "exited": false
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 29030,
+            "processId": 24594,
             "exited": false
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 29718,
+            "processId": 25586,
             "exited": false
         },
         {
             "deviceId": "R5CTA0S589P",
             "name": "com.WorldsDev.EBAM",
-            "processId": 30212,
+            "processId": 16913,
             "exited": false
         }
     ],
@@ -83,7 +89,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -99,11 +105,11 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",
-                "m_Selected": false
+                "m_Selected": true
             }
         ]
     },
